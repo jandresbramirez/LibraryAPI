@@ -1,12 +1,15 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+import datetime
+from sqlalchemy import Column, Integer, String, ForeignKey, Date 
 from sqlalchemy.orm import relationship, declarative_base
 
-Base = declarative_base
+Base = declarative_base()
 
 class Author(Base):
     __tablename__ = 'authors'
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(255), nullable=False)
+    
+    #Relaciones entre tablas
     books = relationship('Book', back_populates='author', cascade="all, delete-orphan")
 
 class Book(Base):
@@ -14,7 +17,9 @@ class Book(Base):
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String(255), nullable=False)
     author_id = Column(Integer, ForeignKey('authors.id'))
-    author = relationship('Author', back_populates="books", cascade="all, delete-orphan")
+
+    #Relaciones entre tablas
+    author = relationship('Author', back_populates="books")
     loans = relationship('Loan', back_populates="book", cascade="all, delete-orphan")
 
 class User(Base):
