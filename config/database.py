@@ -3,8 +3,9 @@ import logging
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.exc import OperationalError
-from models.band_model import Base
+from models.library_model import Base
 from dotenv import load_dotenv
+
 logging.basicConfig(level=logging.INFO)
 
 # Cargar variables de entorno desde .env
