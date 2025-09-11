@@ -17,11 +17,11 @@ class BookRepository:
 
     #Obtener un libro en específico por un ID
     def get_book_by_id(self, book_id: int):
-        return self.db.query(Book).filter(Book.id = book_id).first()
+        return self.db.query(Book).filter(Book.id == book_id).first()
 
     #Obtener un libro en específico por un Autor
     def get_books_by_author(self, author_id: int):
-        return self.db.query(Book).filter(Book.author_id = author_id).all()
+        return self.db.query(Book).filter(Book.author_id == author_id).all()
 
     #Crear un nuevo prestamo
     def create_book(self, title: str, author_id: int):

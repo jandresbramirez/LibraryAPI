@@ -20,7 +20,7 @@ def get_book(book_id):
     return jsonify({'error': 'Libro no encontrado'}), 404
 
 @book_bp.route('/books/<int:author_id>', methods=['GET'])
-def get_book(author_id):
+def get_book_author(author_id):
     author = service.obtener_libros_autor(author_id)
     if author:
         return jsonify({'id': book.id, 'title': book.title, 'author_id': book.author_id}), 200
