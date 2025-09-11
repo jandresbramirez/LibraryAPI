@@ -19,7 +19,7 @@ def get_user(user_id):
         return jsonify({'id': user.id, 'name': user.name, 'email': user.email}), 200
     return jsonify({'error': 'Usuario no encontrado'}), 404
 
-@user_bp.route('/users/<int:email>', methods=['GET'])
+@user_bp.route('/users/<string:email>', methods=['GET'])
 def get_user_email(email):
     user_email = service.obtener_usuario_por_email(email)
     if user_email:
