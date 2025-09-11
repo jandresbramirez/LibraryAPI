@@ -48,7 +48,7 @@ curl -X GET http://127.0.0.1:5000/books
 ```bash
 curl -X POST http://127.0.0.1:5000/books \
    -H "Content-Type: application/json" \
-   -d '{"title": "Cien Años de Soledad", "author": "Gabriel García Márquez"}'
+   -d '{"title": "Cien Años de Soledad", "author_id": 1}'
 ```
 
 3. **Obtener libro por ID**
@@ -108,7 +108,7 @@ curl -X GET http://127.0.0.1:5000/authors
 ```bash
 curl -X POST http://127.0.0.1:5000/authors \
   -H "Content-Type: application/json" \
-  -d '{"name": "Gabriel García Márquez"}'
+  -d '{"name": "Gabriel Garcia Marquez"}'
 ```
 
 3. **Obtener autor por ID**
@@ -120,7 +120,7 @@ curl -X GET http://127.0.0.1:5000/authors/1
 ```bash
 curl -X PUT http://127.0.0.1:5000/authors/1 \
   -H "Content-Type: application/json" \
-  -d '{"name": "Gabriel G. Márquez (Edición)"}'
+  -d '{"name": "Gabriel G. Marquez (Edicion)"}'
 ```
 
 5. **Eliminar autor**
