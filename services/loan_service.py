@@ -23,7 +23,7 @@ class LoanService:
         return loan
 
     def crear_prestamo(self, book_id: int, user_id: int, loan_date=None, return_date=None):
-        user = self.user_repository.get_user_by_id.(user_id)
+        user = self.user_repository.get_user_by_id(user_id)
         if not user:
             raise ValueError("El usuario no existe.")
         book = self.book_repository.get_book_by_id(book_id)
