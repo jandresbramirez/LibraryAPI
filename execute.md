@@ -1,7 +1,7 @@
 # Ejecuciones con CURL para la LibraryAPI
 ## Users | Authors | Books | Loans
 
-# <USUARIOS>
+# -- USUARIOS --
 
 1. **Listar usuarios**
 ```bash
@@ -32,7 +32,7 @@ curl -X PUT http://127.0.0.1:5000/users/1 \
 curl -X DELETE http://127.0.0.1:5000/users/1
 ```
 
-# <LIBROS>
+# -- LIBROS --
 
 1. **Listar libros**
 ```bash
@@ -62,7 +62,7 @@ curl -X PUT http://127.0.0.1:5000/books/1 \
 ```bash
 curl -X DELETE http://127.0.0.1:5000/books/1
 ```
-# <PRÉSTAMOS>
+# -- PRÉSTAMOS --
 
 1. **Listar préstamos**
 ```bash
@@ -92,7 +92,7 @@ curl -X PUT http://127.0.0.1:5000/loans/1 \
 ```bash
 curl -X DELETE http://127.0.0.1:5000/loans/1
 ```
-# <AUTORES>
+# -- AUTORES --
 
 1. **Listar autores**
 ```bash
