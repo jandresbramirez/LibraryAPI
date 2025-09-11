@@ -16,8 +16,8 @@ class LoanRepository:
         return self.db.query(Loan).all()
 
     #Obtener un prestamo en específico por un ID
-    def get_loan_by_id(self, load_id: int):
-        return self.db.query.(Loan).filter(Loan.id == loan_id).first()
+    def get_loan_by_id(self, loan_id: int):
+        return self.db.query(Loan).filter(Loan.id == loan_id).first()
 
     #Crear un nuevo prestamo
     def create_loan(self, book_id: int, user_id: int, loan_date=None, return_date=None):
@@ -42,9 +42,9 @@ class LoanRepository:
         return loan
 
     #Eliminar un prestamo por su ID
-    def delete_loan(self, load_id: int):
-        loan = self.get_loan_by_id(load_id)
+    def delete_loan(self, loan_id: int):
+        loan = self.get_loan_by_id(loan_id)
         if loan:
             self.db.delete(loan)
             self.db.commit()
-        return load
+        return loan
