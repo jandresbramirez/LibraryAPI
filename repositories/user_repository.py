@@ -4,7 +4,7 @@ from models.library_model import User
 class UserRepository:
 
     """
-    Repositorio para la gestión de libros en la base de datos
+    Repositorio para la gestión de usuarios en la base de datos
     integrando un CRUD.
     """
 
