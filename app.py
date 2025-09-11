@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from controllers.author_controller import author_bp
 from controllers.loan_controller import loan_bp
 from controllers.book_controller import book_bp
