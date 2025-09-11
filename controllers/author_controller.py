@@ -3,6 +3,7 @@ from services.author_service import AuthorService
 from config.database import get_db_session
 
 author_bp = Blueprint('author_bp', __name__)
+
 service = AuthorService(get_db_session())
 
 @author_bp.route('/authors', methods=['GET'])
