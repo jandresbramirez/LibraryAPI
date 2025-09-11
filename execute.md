@@ -60,7 +60,7 @@ curl -X GET http://127.0.0.1:5000/books/1
 ```bash
 curl -X PUT http://127.0.0.1:5000/books/1 \
    -H "Content-Type: application/json" \
-   -d '{"title": "Cien Años de Soledad (Edición Especial)", "author": "Gabriel García Márquez"}'
+   -d '{"title": "Cien Anios de Soledad (Edicion Especial)", "author_id": 1}'
 ```
 
 5. **Eliminar libro**
