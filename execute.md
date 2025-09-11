@@ -1,38 +1,43 @@
 # Ejecuciones con CURL para la LibraryAPI
 ## Users | Authors | Books | Loans
 
-# -- USUARIOS --
+## -- USUARIOS --
 
 1. **Listar usuarios**
 ```bash
 curl -X GET http://127.0.0.1:5000/users
 ```
 
-2. **Crear usuario**
+2. **Obtener usuario por ID**
+```bash
+curl -X GET http://127.0.0.1:5000/users/1
+```
+
+3. **Obtener usuario por email**
+```bash
+curl -X GET http://127.0.0.1:5000/users/juan@example.com
+```
+
+4. **Crear usuario**
 ```bash
 curl -X POST http://127.0.0.1:5000/users \
    -H "Content-Type: application/json" \
    -d '{"name": "Juan Perez", "email": "juan@example.com"}'
 ```
 
-3. **Obtener usuario por ID**
-```bash
-curl -X GET http://127.0.0.1:5000/users/1
-```
-
-4. **Actualizar usuario**
+5. **Actualizar usuario**
 ```bash
 curl -X PUT http://127.0.0.1:5000/users/1 \
    -H "Content-Type: application/json" \
    -d '{"name": "Juan Actualizado", "email": "juan_updated@example.com"}'
 ```
 
-5. **Eliminar usuario**
+6. **Eliminar usuario**
 ```bash
 curl -X DELETE http://127.0.0.1:5000/users/1
 ```
 
-# -- LIBROS --
+## -- LIBROS --
 
 1. **Listar libros**
 ```bash
@@ -62,7 +67,7 @@ curl -X PUT http://127.0.0.1:5000/books/1 \
 ```bash
 curl -X DELETE http://127.0.0.1:5000/books/1
 ```
-# -- PRÉSTAMOS --
+## -- PRÉSTAMOS --
 
 1. **Listar préstamos**
 ```bash
@@ -92,7 +97,7 @@ curl -X PUT http://127.0.0.1:5000/loans/1 \
 ```bash
 curl -X DELETE http://127.0.0.1:5000/loans/1
 ```
-# -- AUTORES --
+## -- AUTORES --
 
 1. **Listar autores**
 ```bash
