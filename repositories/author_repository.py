@@ -39,7 +39,7 @@ class AuthorRepository:
     #Elimina un autor por su ID
     def delete_author(self, author_id: int):
         author = self.get_author_by_id(author_id)
-        if author
+        if author:
             self.db.delete(author)
             self.db.commit()
         return author

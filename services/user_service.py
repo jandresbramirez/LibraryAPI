@@ -12,17 +12,17 @@ class UserService:
     def listar_usuarios(self):
         return self.repository.get_all_users()
 
-    def obtener_usuario_id(self, user_id: int):
+    def obtener_usuario_por_id(self, user_id: int):
         user = self.repository.get_user_by_id(user_id)
         if not user:
             raise ValueError("El usuario no existe.")
         return user
 
-    def obtener_usuario_email(self, email: str):
-        email = self.repository.get_user_by_email(email)
-        if not email:
+    def obtener_usuario_por_email(self, email: str):
+        user_email = self.repository.get_user_by_email(email)
+        if not user_email:
             raise ValueError("El email no existe.")
-        return email
+        return user_email
 
     def crear_usuario(self, name: str, email: str):
         users = self.repository.get_all_users()
@@ -31,7 +31,7 @@ class UserService:
         return self.repository.create_user(name, email)
 
     def actualizar_usuario(self, user_id: int, name: str = None, email: str = None):
-        user = self.repository.get_user_by_id(user.id)
+        user = self.repository.get_user_by_id(user_id)
         if not user:
             raise ValueError("El usuario no existe.")
         if email:
