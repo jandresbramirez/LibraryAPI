@@ -86,11 +86,12 @@ curl -X POST http://127.0.0.1:5000/loans \
 curl -X GET http://127.0.0.1:5000/loans/1
 ```
 
-4. **Actualizar préstamo**
+4. **Actualizar fecha de devolución de préstamo**
 ```bash
 curl -X PUT http://127.0.0.1:5000/loans/1 \
-   -H "Content-Type: application/json" \
-   -d '{"user_id": 1, "book_id": 1, "due_date": "2025-11-01"}'
+     -H "Content-Type: application/json" \
+     -d '{"return_date": "2025-12-31"}'
+
 ```
 
 5. **Eliminar préstamo**

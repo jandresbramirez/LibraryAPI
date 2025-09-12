@@ -10,7 +10,7 @@ service = LoanService(get_db_session())
 @loan_bp.route('/loans', methods=['GET'])
 def get_loans():
     loans = service.listar_prestamos()
-    return jsonify([{'id': l.id, 'user_id': l.user_id, 'book_id': l.book_id, 'loan_date': l.loan_date, 'return_date': l.return_date} for l in loans]), 200
+    return jsonify([{'id': loan.id, 'user_id': loan.user_id, 'book_id': loan.book_id, 'loan_date': loan.loan_date.isoformat(), 'return_date': loan.return_date.isoformat()} for loan in loans]), 200
 
 @loan_bp.route('/loans/<int:loan_id>', methods=['GET'])
 def get_loan(loan_id):
@@ -35,7 +35,7 @@ def update_loan(loan_id):
     return_date = data.get('return_date')
     loan = service.actualizar_prestamo(loan_id, return_date)
     if loan:
-        return jsonify({'id': loan.id, 'user_id': loan.user_id, 'book_id': loan.book_id, 'loan_date': loan.loan_date, 'return_date': loan.return_date}), 200
+        return jsonify({'id': loan.id, 'user_id': loan.user_id, 'book_id': loan.book_id, 'loan_date': loan.loan_date.isoformat(), 'return_date': loan.return_date.isoformat()}), 200
     return jsonify({'error': 'Préstamo no encontrado'}), 404
 
 @loan_bp.route('/loans/<int:loan_id>', methods=['DELETE'])

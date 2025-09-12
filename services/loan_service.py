@@ -2,6 +2,7 @@ from repositories.book_repository import BookRepository
 from repositories.user_repository import UserRepository
 from repositories.loan_repository import LoanRepository
 from sqlalchemy.orm import Session
+from datetime import datetime
 
 class LoanService:
     """
@@ -39,10 +40,13 @@ class LoanService:
         loan = self.repository.get_loan_by_id(loan_id)
         if not loan:
             raise ValueError("El prestamo no existe.")
-        if loan.return_date:
-            raise ValueError("El préstamo ya fue devuelto.")
-
-        return self.repository.update_loan(loan_id, return_date)
+        if return_date:
+            try:
+                # convertir string a datetime.date
+                return_date_obj = datetime.strptime(return_date, "%Y-%m-%d").date()
+                return self.repository.update_loan(loan_id, return_date_obj)
+            except ValueError:
+                raise ValueError("Formato de fecha inválido. Usa YYYY-MM-DD")
 
     def eliminar_prestamo(self, loan_id: int):
         loan = self.repository.get_loan_by_id(loan_id)
