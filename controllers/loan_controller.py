@@ -10,7 +10,7 @@ service = LoanService(get_db_session())
 @loan_bp.route('/loans', methods=['GET'])
 def get_loans():
     loans = service.listar_prestamos()
-    return jsonify([{'id': loan.id, 'user_id': loan.user_id, 'book_id': loan.book_id, 'loan_date': loan.loan_date.isoformat(), 'return_date': loan.return_date.isoformat()} for loan in loans]), 200
+    return jsonify([{'id': loan.id, 'user_id': loan.user_id, 'book_id': loan.book_id, 'loan_date': loan.loan_date.isoformat(), 'return_date': loan.return_date.isoformat() if loan.return_date else None} for loan in loans]), 200
 
 @loan_bp.route('/loans/<int:loan_id>', methods=['GET'])
 def get_loan(loan_id):
