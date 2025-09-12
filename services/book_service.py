@@ -45,15 +45,17 @@ class BookService:
 
     # Actualizar un libro existente
     def actualizar_libro(self, book_id: int, title: str = None, author_id: int = None):
+        
         book = self.repository.get_book_by_id(book_id)
+        #Si no encuentra el libro:
         if not book:
             raise ValueError("El libro no existe.")
-
+        #Si pasan un nuevo ID de un nuevo autor se cambia
         if author_id:
             autor = self.author_repository.get_author_by_id(author_id)
             if not autor:
                 raise ValueError("El nuevo autor no existe.")
-
+        #Si pasan un nuevo titulo para el libro se cambia
         if title:
             libros = self.repository.get_books_by_author(author_id or book.author_id)
             if any(l.title.lower() == title.lower() and l.id != book_id for l in libros):

@@ -6,11 +6,13 @@ author_bp = Blueprint('author_bp', __name__)
 
 service = AuthorService(get_db_session())
 
+#Ruta GET para listar autores
 @author_bp.route('/authors', methods=['GET'])
 def get_authors():
     authors = service.listar_autores()
     return jsonify([{'id': a.id, 'name': a.name} for a in authors]), 200
 
+#Ruta GET para listar autor por su ID
 @author_bp.route('/authors/<int:author_id>', methods=['GET'])
 def get_author(author_id):
     author = service.obtener_autor(author_id)
@@ -18,6 +20,7 @@ def get_author(author_id):
         return jsonify({'id': author.id, 'name': author.name}), 200
     return jsonify({'error': 'Autor no encontrado'}), 404
 
+#Ruta POST para crear un nuevo autor
 @author_bp.route('/authors', methods=['POST'])
 def create_author():
     data = request.get_json()
@@ -27,6 +30,7 @@ def create_author():
     author = service.crear_autor(name)
     return jsonify({'id': author.id, 'name': author.name}), 201
 
+#Ruta PUT para actualizar un autor por su ID
 @author_bp.route('/authors/<int:author_id>', methods=['PUT'])
 def update_author(author_id):
     data = request.get_json()
@@ -36,6 +40,7 @@ def update_author(author_id):
         return jsonify({'id': author.id, 'name': author.name}), 200
     return jsonify({'error': 'Autor no encontrado'}), 404
 
+#Ruta DELETE para eliminar un autor por su ID
 @author_bp.route('/authors/<int:author_id>', methods=['DELETE'])
 def delete_author(author_id):
     author = service.eliminar_autor(author_id)

@@ -4,7 +4,7 @@ from controllers.loan_controller import loan_bp
 from controllers.book_controller import book_bp
 from controllers.user_controller import user_bp
 
-app = Flask(__name__)
+app = Flask(__name__) #Inicializamos Flask
 
 app.register_blueprint(author_bp)
 app.register_blueprint(loan_bp)

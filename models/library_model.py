@@ -13,6 +13,7 @@ class Author(Base):
     books = relationship('Book', back_populates='author', cascade="all, delete-orphan")
 
 class Book(Base):
+    #Campos de la base de datos
     __tablename__ = 'books'
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String(255), nullable=False)
@@ -23,6 +24,7 @@ class Book(Base):
     loans = relationship('Loan', back_populates="book", cascade="all, delete-orphan")
 
 class User(Base):
+    #Campos de la base de datos
     __tablename__ = "users"
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(255), nullable=False)
@@ -32,6 +34,7 @@ class User(Base):
     loans = relationship('Loan', back_populates="user", cascade="all, delete-orphan")
 
 class Loan(Base):
+    #Campos de la base de datos
     __tablename__ = "loans"
     id = Column(Integer, primary_key=True, index=True)
     book_id = Column(Integer, ForeignKey("books.id"))

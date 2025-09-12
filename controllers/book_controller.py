@@ -7,11 +7,13 @@ book_bp = Blueprint('book_bp', __name__)
 # Instancia del servicio
 service = BookService(get_db_session())
 
+#Ruta GET para listar los libros en el sistema
 @book_bp.route('/books', methods=['GET'])
 def get_books():
     books = service.listar_libros()
     return jsonify([{'id': b.id, 'title': b.title, 'author_id': b.author_id} for b in books]), 200
 
+#Ruta GET para listar un libro por su ID
 @book_bp.route('/books/<int:book_id>', methods=['GET'])
 def get_book(book_id):
     book = service.obtener_libro_id(book_id)
@@ -19,6 +21,7 @@ def get_book(book_id):
         return jsonify({'id': book.id, 'title': book.title, 'author_id': book.author_id}), 200
     return jsonify({'error': 'Libro no encontrado'}), 404
 
+#Ruta GET para mostrar un autor por su ID
 @book_bp.route('/books/<int:author_id>', methods=['GET'])
 def get_book_author(author_id):
     author = service.obtener_libros_autor(author_id)
@@ -26,6 +29,7 @@ def get_book_author(author_id):
         return jsonify({'id': book.id, 'title': book.title, 'author_id': book.author_id}), 200
     return jsonify({'error': 'Libro no encontrado'}), 404
 
+#Ruta POST para crear un nuevo libro
 @book_bp.route('/books', methods=['POST'])
 def create_book():
     data = request.get_json()
@@ -36,6 +40,7 @@ def create_book():
     book = service.crear_libro(title, author_id)
     return jsonify({'id': book.id, 'title': book.title, 'author_id': book.author_id}), 201
 
+#Ruta PUT para actualizar un libro por su ID
 @book_bp.route('/books/<int:book_id>', methods=['PUT'])
 def update_book(book_id):
     data = request.get_json()
@@ -46,6 +51,7 @@ def update_book(book_id):
         return jsonify({'id': book.id, 'title': book.title, 'author_id': book.author_id}), 200
     return jsonify({'error': 'Libro no encontrado'}), 404
 
+#Ruta DELETE para eliminar un libro por su ID
 @book_bp.route('/books/<int:book_id>', methods=['DELETE'])
 def delete_book(book_id):
     book = service.eliminar_libro(book_id)

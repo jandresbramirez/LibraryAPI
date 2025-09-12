@@ -7,11 +7,13 @@ user_bp = Blueprint('user_bp', __name__)
 # Instancia del servicio
 service = UserService(get_db_session())
 
+#Ruta GET para listar los usuarios en el sistema
 @user_bp.route('/users', methods=['GET'])
 def get_users():
     users = service.listar_usuarios()
     return jsonify([{'id': u.id, 'name': u.name, 'email': u.email} for u in users]), 200
 
+#Ruta GET para listar un usuario por su ID
 @user_bp.route('/users/<int:user_id>', methods=['GET'])
 def get_user(user_id):
     user = service.obtener_usuario_por_id(user_id)
@@ -19,6 +21,7 @@ def get_user(user_id):
         return jsonify({'id': user.id, 'name': user.name, 'email': user.email}), 200
     return jsonify({'error': 'Usuario no encontrado'}), 404
 
+#Ruta GET para listar un usuario por su correo
 @user_bp.route('/users/<string:email>', methods=['GET'])
 def get_user_email(email):
     user_email = service.obtener_usuario_por_email(email)
@@ -26,6 +29,7 @@ def get_user_email(email):
         return jsonify({'id': user_email.id, 'name': user_email.name, 'email': user_email.email}), 200
     return jsonify({'error': 'Correo no encontrado'}), 404
 
+#Ruta POST para crear un nuevo usuario
 @user_bp.route('/users', methods=['POST'])
 def create_user():
     data = request.get_json()
@@ -36,6 +40,7 @@ def create_user():
     user = service.crear_usuario(name, email)
     return jsonify({'id': user.id, 'name': user.name, 'email': user.email}), 201
 
+#Ruta PUT para actualizar un usuario por su ID
 @user_bp.route('/users/<int:user_id>', methods=['PUT'])
 def update_user(user_id):
     data = request.get_json()
@@ -46,6 +51,7 @@ def update_user(user_id):
         return jsonify({'id': user.id, 'name': user.name, 'email': user.email}), 200
     return jsonify({'error': 'Usuario no encontrado'}), 404
 
+#Ruta DELETE para eliminar un usuario por su ID
 @user_bp.route('/users/<int:user_id>', methods=['DELETE'])
 def delete_user(user_id):
     user = service.eliminar_usuario(user_id)
