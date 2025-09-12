@@ -48,7 +48,7 @@ curl -X GET http://127.0.0.1:5000/books
 ```bash
 curl -X POST http://127.0.0.1:5000/books \
    -H "Content-Type: application/json" \
-   -d '{"title": "Cien Años de Soledad", "author_id": 1}'
+   -d '{"title": "Cien Anios de Soledad", "author_id": 1}'
 ```
 
 3. **Obtener libro por ID**
@@ -91,7 +91,6 @@ curl -X GET http://127.0.0.1:5000/loans/1
 curl -X PUT http://127.0.0.1:5000/loans/1 \
      -H "Content-Type: application/json" \
      -d '{"return_date": "2025-12-31"}'
-
 ```
 
 5. **Eliminar préstamo**
