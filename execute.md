@@ -77,8 +77,8 @@ curl -X GET http://127.0.0.1:5000/loans
 2. **Crear préstamo**
 ```bash
 curl -X POST http://127.0.0.1:5000/loans \
-   -H "Content-Type: application/json" \
-   -d '{"user_id": 1, "book_id": 1, "due_date": "2025-10-01"}'
+     -H "Content-Type: application/json" \
+     -d '{"user_id": 1, "book_id": 2}'
 ```
 
 3. **Obtener préstamo por ID**

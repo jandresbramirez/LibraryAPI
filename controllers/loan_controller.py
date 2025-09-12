@@ -10,13 +10,13 @@ service = LoanService(get_db_session())
 @loan_bp.route('/loans', methods=['GET'])
 def get_loans():
     loans = service.listar_prestamos()
-    return jsonify([{'id': loan.id, 'user_id': loan.user_id, 'book_id': loan.book_id, 'loan_date': loan.loan_date.isoformat(), 'return_date': loan.return_date.isoformat()} for loan in loans]), 200
+    return jsonify([{'id': loan.id, 'user_id': loan.user_id, 'book_id': loan.book_id, 'loan_date': loan.loan_date.isoformat(), 'return_date': loan.return_date.isoformat()}]), 200
 
 @loan_bp.route('/loans/<int:loan_id>', methods=['GET'])
 def get_loan(loan_id):
     loan = service.obtener_prestamo_id(loan_id)
     if loan:
-        return jsonify({'id': loan.id, 'user_id': loan.user_id, 'book_id': loan.book_id, 'loan_date': loan.loan_date, 'return_date': loan.return_date}), 200
+        return jsonify({'id': loan.id, 'user_id': loan.user_id, 'book_id': loan.book_id, 'loan_date': loan.loan_date.isoformat(), 'return_date': loan.return_date.isoformat()}), 200
     return jsonify({'error': 'Préstamo no encontrado'}), 404
 
 @loan_bp.route('/loans', methods=['POST'])
@@ -27,7 +27,7 @@ def create_loan():
     if not user_id or not book_id:
         return jsonify({'error': 'user_id y book_id son obligatorios'}), 400
     loan = service.crear_prestamo(user_id, book_id)
-    return jsonify({'id': loan.id, 'user_id': loan.user_id, 'book_id': loan.book_id, 'loan_date': loan.loan_date, 'return_date': loan.return_date}), 201
+    return jsonify({'id': loan.id, 'user_id': loan.user_id, 'book_id': loan.book_id, 'loan_date': loan.loan_date.isoformat(), 'return_date': loan.return_date.isoformat()}), 201
 
 @loan_bp.route('/loans/<int:loan_id>', methods=['PUT'])
 def update_loan(loan_id):
