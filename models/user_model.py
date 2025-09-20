@@ -1,7 +1,7 @@
 import datetime
 from sqlalchemy import Column, Integer, String, ForeignKey, Date 
 from sqlalchemy.orm import relationship
-from db import Base
+from models.db import Base
 
 class User(Base):
     #Campos de la base de datos
