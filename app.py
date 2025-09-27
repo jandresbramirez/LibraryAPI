@@ -6,6 +6,14 @@ from controllers.user_controller import user_bp
 
 app = Flask(__name__) #Inicializamos Flask
 
+# Configurar JWT
+app.config['JWT_SECRET_KEY'] = JWT_SECRET_KEY
+app.config['JWT_TOKEN_LOCATION'] = JWT_TOKEN_LOCATION
+app.config['JWT_ACCESS_TOKEN_EXPIRES'] = JWT_ACCESS_TOKEN_EXPIRES
+app.config['JWT_HEADER_NAME'] = JWT_HEADER_NAME
+app.config['JWT_HEADER_TYPE'] = JWT_HEADER_TYPE
+
+
 app.register_blueprint(author_bp)
 app.register_blueprint(loan_bp)
 app.register_blueprint(book_bp)
