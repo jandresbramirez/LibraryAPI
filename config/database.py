@@ -34,6 +34,12 @@ def get_engine():
 
 engine = get_engine()
 Session = sessionmaker(bind=engine)
+
+#Solución para la creación de tablas
+from models.user_model import User
+from models.book_model import Book
+from models.loan_model import Loan
+from models.author_model import Author
 Base.metadata.create_all(engine)
 
 def get_db_session():

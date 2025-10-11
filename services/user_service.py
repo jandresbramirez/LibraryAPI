@@ -28,11 +28,11 @@ class UserService:
         return user_email
 
     #Crear un nuevo usuario en el sistema
-    def crear_usuario(self, name: str, email: str):
+    def crear_usuario(self, name: str, email: str, password: str):
         users = self.repository.get_all_users()
         if any(u.email == email for u in users):
             raise ValueError("El email ya está registrado.")
-        return self.repository.create_user(name, email)
+        return self.repository.create_user(name, email, password)
 
     #Actualizar un usuario por su ID
     def actualizar_usuario(self, user_id: int, name: str = None, email: str = None):

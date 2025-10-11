@@ -35,9 +35,10 @@ def create_user():
     data = request.get_json()
     name = data.get('name')
     email = data.get('email')
-    if not name or not email:
-        return jsonify({'error': 'Nombre y correo son obligatorios'}), 400
-    user = service.crear_usuario(name, email)
+    password = data.get('password')
+    if not name or not email or not password:
+        return jsonify({'error': 'Nombre, correo y contraseña son obligatorios'}), 400
+    user = service.crear_usuario(name, email, password)
     return jsonify({'id': user.id, 'name': user.name, 'email': user.email}), 201
 
 #Ruta PUT para actualizar un usuario por su ID
