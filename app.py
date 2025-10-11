@@ -1,5 +1,5 @@
 from flask import Flask, jsonify
-from config.jwt import *
+from config.jwt import * 
 from flask_jwt_extended import JWTManager
 from controllers.author_controller import author_bp
 from controllers.loan_controller import loan_bp
