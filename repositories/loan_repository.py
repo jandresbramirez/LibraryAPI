@@ -12,15 +12,15 @@ class LoanRepository:
     def __init__(self, db_session: Session):
         self.db = db_session
 
-    #Obtener todos los prestamos de la base de datos
+    # Obtener todos los prestamos de la base de datos
     def get_all_loans(self):
         return self.db.query(Loan).all()
 
-    #Obtener un prestamo en específico por un ID
+    # Obtener un prestamo en específico por un ID
     def get_loan_by_id(self, loan_id: int):
         return self.db.query(Loan).filter(Loan.id == loan_id).first()
 
-    #Crear un nuevo prestamo
+    # Crear un nuevo prestamo
     def create_loan(self, book_id: int, user_id: int, loan_date=None, return_date=None):
         new_loan = Loan(
             book_id=book_id,
@@ -33,7 +33,7 @@ class LoanRepository:
         self.db.refresh(new_loan)
         return new_loan
 
-    #Actualizar la fecha de devolución de un prestamo existente
+    # Actualizar la fecha de devolución de un prestamo existente
     def update_loan(self, loan_id: int, return_date=None):
         loan=self.get_loan_by_id(loan_id)
         if loan and return_date:
@@ -42,7 +42,7 @@ class LoanRepository:
             self.db.refresh(loan)
         return loan
 
-    #Eliminar un prestamo por su ID
+    # Eliminar un prestamo por su ID
     def delete_loan(self, loan_id: int):
         loan = self.get_loan_by_id(loan_id)
         if loan:
