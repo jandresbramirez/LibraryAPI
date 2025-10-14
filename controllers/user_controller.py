@@ -7,6 +7,21 @@ user_bp = Blueprint('user_bp', __name__)
 # Instancia del servicio
 service = UserService(get_db_session())
 
+#Ruta POST para el login de usuarios
+@user_bp.route('/login', methods['POST'])
+def login():
+    data = request.get_json()
+    email = data.get('email')
+    password = data.get('password')
+
+    if not email or if not password:
+        return jsonify({'error': 'Email y contraseña son obligatorios'}), 400
+    user = service.authenticate_user(email, passord)
+    if user:
+        access_token = create_access_token(identity=str(user.id))
+        return jsonify({'access_token': access_token}), 200
+    return jsonify({'Error': 'Credenciales inválidas'}), 401
+
 #Ruta GET para listar los usuarios en el sistema
 @user_bp.route('/users', methods=['GET'])
 def get_users():
