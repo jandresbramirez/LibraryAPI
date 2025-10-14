@@ -1,6 +1,8 @@
+from config.logger import logger
 from flask import Blueprint, request, jsonify
 from services.author_service import AuthorService
 from config.database import get_db_session
+from flask_jwt_extended import jwt_required
 
 author_bp = Blueprint('author_bp', __name__)
 
@@ -14,6 +16,7 @@ def get_authors():
 
 #Ruta GET para listar autor por su ID
 @author_bp.route('/authors/<int:author_id>', methods=['GET'])
+@jwt_required()
 def get_author(author_id):
     author = service.obtener_autor(author_id)
     if author:
@@ -22,6 +25,7 @@ def get_author(author_id):
 
 #Ruta POST para crear un nuevo autor
 @author_bp.route('/authors', methods=['POST'])
+@jwt_required()
 def create_author():
     data = request.get_json()
     name = data.get('name')
@@ -32,6 +36,7 @@ def create_author():
 
 #Ruta PUT para actualizar un autor por su ID
 @author_bp.route('/authors/<int:author_id>', methods=['PUT'])
+@jwt_required()
 def update_author(author_id):
     data = request.get_json()
     name = data.get('name')
@@ -42,6 +47,7 @@ def update_author(author_id):
 
 #Ruta DELETE para eliminar un autor por su ID
 @author_bp.route('/authors/<int:author_id>', methods=['DELETE'])
+@jwt_required()
 def delete_author(author_id):
     author = service.eliminar_autor(author_id)
     if author:

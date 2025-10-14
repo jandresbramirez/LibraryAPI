@@ -1,6 +1,8 @@
+from config.logger import logger
 from flask import Blueprint, request, jsonify
 from services.book_service import BookService
 from config.database import get_db_session
+from flask_jwt_extended import jwt_required
 
 book_bp = Blueprint('book_bp', __name__)
 
@@ -15,6 +17,7 @@ def get_books():
 
 #Ruta GET para listar un libro por su ID
 @book_bp.route('/books/<int:book_id>', methods=['GET'])
+@jwt_required()
 def get_book(book_id):
     book = service.obtener_libro_id(book_id)
     if book:
@@ -23,6 +26,7 @@ def get_book(book_id):
 
 #Ruta GET para mostrar un autor por su ID
 @book_bp.route('/books/<int:author_id>', methods=['GET'])
+@jwt_required()
 def get_book_author(author_id):
     author = service.obtener_libros_autor(author_id)
     if author:
@@ -31,6 +35,7 @@ def get_book_author(author_id):
 
 #Ruta POST para crear un nuevo libro
 @book_bp.route('/books', methods=['POST'])
+@jwt_required()
 def create_book():
     data = request.get_json()
     title = data.get('title')
@@ -42,6 +47,7 @@ def create_book():
 
 #Ruta PUT para actualizar un libro por su ID
 @book_bp.route('/books/<int:book_id>', methods=['PUT'])
+@jwt_required()
 def update_book(book_id):
     data = request.get_json()
     title = data.get('title')
@@ -53,6 +59,7 @@ def update_book(book_id):
 
 #Ruta DELETE para eliminar un libro por su ID
 @book_bp.route('/books/<int:book_id>', methods=['DELETE'])
+@jwt_required()
 def delete_book(book_id):
     book = service.eliminar_libro(book_id)
     if book:

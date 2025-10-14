@@ -1,3 +1,4 @@
+from config.logger import logger
 from flask import Blueprint, request, jsonify
 from services.user_service import UserService
 from config.database import get_db_session
@@ -30,21 +31,26 @@ def login():
     password = data.get('password')
 
     if not email or not password:
+        logger.warning("Login fallido: usuario o contraseña no proporcionados")
         return jsonify({'error': 'Email y contraseña son obligatorios'}), 400
     user = service.authenticate_user(email, passord)
     if user:
         access_token = create_access_token(identity=str(user.id))
+        logger.info(f"Usuario autenticado: {email}")
         return jsonify({'access_token': access_token}), 200
+    logger.warning(f"Login fallido para el usuario: {email} | Credenciales inválidas")
     return jsonify({'error': 'Credenciales inválidas'}), 401
 
 #Ruta GET para listar los usuarios en el sistema
 @user_bp.route('/users', methods=['GET'])
+@jwt_required()
 def get_users():
     users = service.listar_usuarios()
     return jsonify([{'id': u.id, 'name': u.name, 'email': u.email} for u in users]), 200
 
 #Ruta GET para listar un usuario por su ID
 @user_bp.route('/users/<int:user_id>', methods=['GET'])
+@jwt_required()
 def get_user(user_id):
     user = service.obtener_usuario_por_id(user_id)
     if user:
@@ -53,6 +59,7 @@ def get_user(user_id):
 
 #Ruta GET para listar un usuario por su correo
 @user_bp.route('/users/<string:email>', methods=['GET'])
+@jwt_required()
 def get_user_email(email):
     user_email = service.obtener_usuario_por_email(email)
     if user_email:
@@ -73,6 +80,7 @@ def create_user():
 
 #Ruta PUT para actualizar un usuario por su ID
 @user_bp.route('/users/<int:user_id>', methods=['PUT'])
+@jwt_required()
 def update_user(user_id):
     data = request.get_json()
     name = data.get('name')
@@ -85,6 +93,7 @@ def update_user(user_id):
 
 #Ruta DELETE para eliminar un usuario por su ID
 @user_bp.route('/users/<int:user_id>', methods=['DELETE'])
+@jwt_required()
 def delete_user(user_id):
     user = service.eliminar_usuario(user_id)
     if user:
