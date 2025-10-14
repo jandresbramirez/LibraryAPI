@@ -1,12 +1,10 @@
 import os
-import logging
+from config.logger import logger
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.exc import OperationalError
 from models.db import Base
 from dotenv import load_dotenv
-
-logging.basicConfig(level=logging.INFO)
 
 # Cargar variables de entorno desde .env
 load_dotenv()
@@ -24,22 +22,16 @@ def get_engine():
             # Probar conexión
             conn = engine.connect()
             conn.close()
-            logging.info('Conexión a MySQL exitosa.')
+            logger.info('Conexión a MySQL exitosa.')
             return engine
         except OperationalError:
-            logging.warning('No se pudo conectar a MySQL. Usando SQLite local.')
+            logger.warning('No se pudo conectar a MySQL. Usando SQLite local.')
     # Fallback a SQLite
     engine = create_engine(SQLITE_URI, echo=True)
     return engine
 
 engine = get_engine()
 Session = sessionmaker(bind=engine)
-
-#Solución para la creación de tablas
-from models.user_model import User
-from models.book_model import Book
-from models.loan_model import Loan
-from models.author_model import Author
 Base.metadata.create_all(engine)
 
 def get_db_session():

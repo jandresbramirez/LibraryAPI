@@ -1,10 +1,12 @@
 from flask import Flask, jsonify
-from config.jwt import * 
+from config.jwt import *
+from config.database import engine
 from flask_jwt_extended import JWTManager
+from models.db import Base
 from controllers.author_controller import author_bp
 from controllers.loan_controller import loan_bp
 from controllers.book_controller import book_bp
-from controllers.user_controller import user_bp
+from controllers.user_controller import user_bp, register_jwt_error_handlers
 
 app = Flask(__name__) # Inicializamos Flask
 
@@ -22,10 +24,17 @@ app.register_blueprint(loan_bp)
 app.register_blueprint(book_bp)
 app.register_blueprint(user_bp)
 
+# Registrar manejadores personalizados de error JWT
+register_jwt_error_handlers(app)
+
 # Endpoint de bienvenida
 @app.route("/", methods=["GET"])
 def home():
     return jsonify({"message": "Bienvenido a la API de LibraryAPI"}), 200
 
 if __name__ == "__main__":
+    # Crear tablas automáticamente por si no se han creado en database.py
+    print("Verificando y creando tablas de base de datos si es necesario...")
+    Base.metadata.create_all(engine)
+    print("Tablas creadas.")
     app.run(host="0.0.0.0", port=5000, debug=True)

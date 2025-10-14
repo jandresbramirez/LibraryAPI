@@ -18,7 +18,7 @@ def register_jwt_error_handlers(app):
     @app.errorhandler(NoAuthorizationError)
     def handle_no_auth_error(e):
         logger.warning("Intento de acceso sin autenticación JWT")
-        return jsonify({'error': 'No autenticado. Debe enviar un token JWT valido en el header Authorization.'}), 401, {'Content-Type': 'application/json; charset=utf-8'}
+        return jsonify({'error': 'Usuario no autenticado. Debe logearse/registrarse para acceder a este apartado.'}), 401, {'Content-Type': 'application/json; charset=utf-8'}
 
 
 #--------------------ENDPOINTS--------------------#
