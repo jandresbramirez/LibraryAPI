@@ -1,3 +1,6 @@
+import logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 from repositories.user_repository import UserRepository
 from sqlalchemy.orm import Session
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -9,6 +12,20 @@ class UserService:
 
     def __init__(self, db_session: Session):
         self.repository = UserRepository(db_session)
+
+    #Función para autenticar las credenciales del usuario, haciendo uso de el repositorio de get_user_by_email
+    def authenticate_user(self, email: str, passord: str):
+        user = self.repository.get_user_by_email(email)
+        if not user:
+            logger.warning(f"Usuario no encontrado con el email: {email}")
+            return None
+
+        if not check_password_hash(user.password, password):
+            logger.warning(f"Contraseña incorrecta para el usuario: {email}")
+            return None
+        logger.info(f"Usuario {email} autenticado correctamente.")
+        return user
+
 
     #Listar todos los usuarios de la base de datos
     def listar_usuarios(self):
