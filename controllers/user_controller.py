@@ -47,7 +47,8 @@ def update_user(user_id):
     data = request.get_json()
     name = data.get('name')
     email = data.get('email')
-    user = service.actualizar_usuario(user_id, name, email)
+    password = data.get('password')
+    user = service.actualizar_usuario(user_id, name, email, password)
     if user:
         return jsonify({'id': user.id, 'name': user.name, 'email': user.email}), 200
     return jsonify({'error': 'Usuario no encontrado'}), 404

@@ -45,8 +45,10 @@ class UserService:
             users = self.repository.get_all_users()
             if any(u.email == email and u.id != user_id for u in users):
                 raise ValueError("Ese email ya está en uso por otro usuario.")
+        if password:
+            password_hashed = generate_password_hash(password)
 
-        return self.repository.update_user(user_id, name, email)
+        return self.repository.update_user(user_id, name, email, password_hashed)
 
     #Eliminar un usuario de la base de datos por su ID
     def eliminar_usuario(self, user_id: int):

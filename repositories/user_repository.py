@@ -32,13 +32,15 @@ class UserRepository:
         return new_user
 
     #Actualizar nombre y/o correo de un usuario por su ID.
-    def update_user(self, user_id: int, name: str = None, email: str = None):
+    def update_user(self, user_id: int, name: str = None, email: str = None, password: str = None):
         user = self.get_user_by_id(user_id)
         if user:
             if name:
                 user.name = name
             if email:
                 user.email = email
+            if password:
+                user.password = password
             self.db.commit()
             self.db.refresh(user)
         return user
