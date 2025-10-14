@@ -1,5 +1,6 @@
 from repositories.user_repository import UserRepository
 from sqlalchemy.orm import Session
+from werkzeug.security import generate_password_hash, check_password_hash
 
 class UserService:
     """
@@ -32,7 +33,8 @@ class UserService:
         users = self.repository.get_all_users()
         if any(u.email == email for u in users):
             raise ValueError("El email ya está registrado.")
-        return self.repository.create_user(name, email, password)
+        password_hashed = generate_password_hash(password)
+        return self.repository.create_user(name, email, password_hashed)
 
     #Actualizar un usuario por su ID
     def actualizar_usuario(self, user_id: int, name: str = None, email: str = None):

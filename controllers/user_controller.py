@@ -30,7 +30,7 @@ def get_user_email(email):
     return jsonify({'error': 'Correo no encontrado'}), 404
 
 #Ruta POST para crear un nuevo usuario
-@user_bp.route('/users', methods=['POST'])
+@user_bp.route('/registry', methods=['POST'])
 def create_user():
     data = request.get_json()
     name = data.get('name')
@@ -39,7 +39,7 @@ def create_user():
     if not name or not email or not password:
         return jsonify({'error': 'Nombre, correo y contraseña son obligatorios'}), 400
     user = service.crear_usuario(name, email, password)
-    return jsonify({'id': user.id, 'name': user.name, 'email': user.email}), 201
+    return jsonify({'id': user.id, 'name': user.name, 'email': user.email, 'password': user.password}), 201
 
 #Ruta PUT para actualizar un usuario por su ID
 @user_bp.route('/users/<int:user_id>', methods=['PUT'])
