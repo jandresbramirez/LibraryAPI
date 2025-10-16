@@ -35,7 +35,7 @@ def login():
         return jsonify({'error': 'Email y contraseña son obligatorios'}), 400
     user = service.authenticate_user(email, passord)
     if user:
-        access_token = create_access_token(identity=str(user.id))
+        access_token = create_access_token(identity=str(user.id), additional_claims={"role": user.role})
         logger.info(f"Usuario autenticado: {email}")
         return jsonify({'access_token': access_token}), 200
     logger.warning(f"Login fallido para el usuario: {email} | Credenciales inválidas")
