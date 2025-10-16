@@ -43,6 +43,18 @@ def login():
     logger.warning(f"Login fallido para el usuario: {email} | Credenciales inválidas")
     return jsonify({'error': 'Credenciales inválidas'}), 401
 
+#Ruta POST para cerrar sesión
+@user_bp.route('/logout', methods=['POST'])
+@jwt_required()
+def logout():
+    """
+    Endpoint para cerrar sesión del usuario actual.
+    El token JWT utilizado se marca como inválido (revocado).
+    """
+    jti = get_jwt()["jti"]  # Identificador único del token
+    blacklist.add(jti)
+    return jsonify({"message": "Sesión cerrada correctamente"}), 200
+
 #Ruta GET para listar los usuarios en el sistema
 @user_bp.route('/users', methods=['GET'])
 @jwt_required()

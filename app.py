@@ -27,6 +27,13 @@ app.register_blueprint(user_bp)
 # Registrar manejadores personalizados de error JWT
 register_jwt_error_handlers(app)
 
+# Lista negra global para los tokens inválidos
+blacklist = set()
+
+@jwt.token_in_blocklist_loader
+def verify_token_in_blacklist(jwt_header, jwt_payload):
+    return jwt_payload["jti"] in blacklist
+
 # Endpoint de bienvenida
 @app.route("/", methods=["GET"])
 def home():

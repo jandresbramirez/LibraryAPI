@@ -51,6 +51,12 @@ curl -X DELETE http://127.0.0.1:5000/users/1 \
    -H "Authorization: Bearer <TOKEN_AUTHORIZATION>" \
    -H "Content-Type: application/json"
 ```
+8. **Cerrar Sesión**
+```bash
+curl -X POST http://127.0.0.1:5000/logout \
+   -H "Authorization: Bearer <TOKEN_JWT_GENERADO>"
+```
+
 
 ## -- LIBROS --
 
