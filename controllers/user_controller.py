@@ -6,6 +6,8 @@ from flask_jwt_extended import create_access_token, jwt_required, JWTManager
 # Handler personalizado para errores de autenticación JWT
 from flask_jwt_extended.exceptions import NoAuthorizationError
 from flask import current_app
+# Decorador para el manejo de roles
+from config.roles_required import role_required
 
 user_bp = Blueprint('user_bp', __name__)
 
@@ -44,6 +46,7 @@ def login():
 #Ruta GET para listar los usuarios en el sistema
 @user_bp.route('/users', methods=['GET'])
 @jwt_required()
+@role_required(["admin"])
 def get_users():
     users = service.listar_usuarios()
     return jsonify([{'id': u.id, 'name': u.name, 'email': u.email} for u in users]), 200
@@ -51,6 +54,7 @@ def get_users():
 #Ruta GET para listar un usuario por su ID
 @user_bp.route('/users/<int:user_id>', methods=['GET'])
 @jwt_required()
+@role_required(["admin", "editor"])
 def get_user(user_id):
     user = service.obtener_usuario_por_id(user_id)
     if user:
@@ -60,6 +64,7 @@ def get_user(user_id):
 #Ruta GET para listar un usuario por su correo
 @user_bp.route('/users/<string:email>', methods=['GET'])
 @jwt_required()
+@role_required(["admin", "editor"])
 def get_user_email(email):
     user_email = service.obtener_usuario_por_email(email)
     if user_email:
@@ -81,6 +86,7 @@ def create_user():
 #Ruta PUT para actualizar un usuario por su ID
 @user_bp.route('/users/<int:user_id>', methods=['PUT'])
 @jwt_required()
+@role_required(["admin", "editor"])
 def update_user(user_id):
     data = request.get_json()
     name = data.get('name')
@@ -94,6 +100,7 @@ def update_user(user_id):
 #Ruta DELETE para eliminar un usuario por su ID
 @user_bp.route('/users/<int:user_id>', methods=['DELETE'])
 @jwt_required()
+@role_required(["admin"])
 def delete_user(user_id):
     user = service.eliminar_usuario(user_id)
     if user:
