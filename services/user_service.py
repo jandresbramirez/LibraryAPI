@@ -12,7 +12,7 @@ class UserService:
         self.repository = UserRepository(db_session)
 
     #Función para autenticar las credenciales del usuario, haciendo uso de el repositorio de get_user_by_email
-    def authenticate_user(self, email: str, passord: str):
+    def authenticate_user(self, email: str, password: str):
         user = self.repository.get_user_by_email(email)
         if not user:
             logger.warning(f"Usuario no encontrado con el email: {email}")

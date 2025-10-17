@@ -35,13 +35,13 @@ def login():
     if not email or not password:
         logger.warning("Login fallido: usuario o contraseña no proporcionados")
         return jsonify({'error': 'Email y contraseña son obligatorios'}), 400
-    user = service.authenticate_user(email, passord)
+    user = service.authenticate_user(email, password)
     if user:
         access_token = create_access_token(identity=str(user.id), additional_claims={"role": user.role})
         logger.info(f"Usuario autenticado: {email}")
         return jsonify({'access_token': access_token}), 200
     logger.warning(f"Login fallido para el usuario: {email} | Credenciales inválidas")
-    return jsonify({'error': 'Credenciales inválidas'}), 401
+    return jsonify({'error': 'Credenciales invalidas'}), 401
 
 #Ruta POST para cerrar sesión
 @user_bp.route('/logout', methods=['POST'])
@@ -66,7 +66,7 @@ def get_users():
 #Ruta GET para listar un usuario por su ID
 @user_bp.route('/users/<int:user_id>', methods=['GET'])
 @jwt_required()
-@role_required(["admin", "editor"])
+@role_required(["admin", "editor", "user"])
 def get_user(user_id):
     user = service.obtener_usuario_por_id(user_id)
     if user:
