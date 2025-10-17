@@ -114,7 +114,7 @@ El uso de un entorno virtual es fundamental para aislar las dependencias del pro
 |  | PUT | `/loans/<id>` | Actualiza un préstamo existente. | admin, editor |
 |  | DELETE | `/loans/<id>` | Elimina un préstamo. | admin |
 
-## --------------------------------------------------------------------
+## ------------------------------------------------------------------------------------------------------------------
 ## 🔐 Flujo de Autenticación
 
 El sistema implementa autenticación mediante **JWT (JSON Web Tokens)** y control de acceso basado en roles.  
