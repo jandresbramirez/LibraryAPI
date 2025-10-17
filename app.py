@@ -7,6 +7,8 @@ from controllers.author_controller import author_bp
 from controllers.loan_controller import loan_bp
 from controllers.book_controller import book_bp
 from controllers.user_controller import user_bp, register_jwt_error_handlers
+# Lista negra de tokens usados
+from utils.blacklist import blacklist
 
 app = Flask(__name__) # Inicializamos Flask
 
@@ -27,12 +29,14 @@ app.register_blueprint(user_bp)
 # Registrar manejadores personalizados de error JWT
 register_jwt_error_handlers(app)
 
-# Lista negra global para los tokens inválidos
-blacklist = set()
-
 @jwt.token_in_blocklist_loader
 def verify_token_in_blacklist(jwt_header, jwt_payload):
     return jwt_payload["jti"] in blacklist
+
+# Si alguien usa un token bloqueado aparecerá este mensaje:
+@jwt.revoked_token_loader
+def revoked_token_callback(jwt_header, jwt_payload):
+    return jsonify({"error": "El token ha sido revocado. Inicia sesión nuevamente."}), 401
 
 # Endpoint de bienvenida
 @app.route("/", methods=["GET"])

@@ -2,7 +2,8 @@ from config.logger import logger
 from flask import Blueprint, request, jsonify
 from services.user_service import UserService
 from config.database import get_db_session
-from flask_jwt_extended import create_access_token, jwt_required, JWTManager
+from flask_jwt_extended import create_access_token, jwt_required, JWTManager, get_jwt
+from utils.blacklist import blacklist
 # Handler personalizado para errores de autenticación JWT
 from flask_jwt_extended.exceptions import NoAuthorizationError
 from flask import current_app
@@ -13,7 +14,6 @@ user_bp = Blueprint('user_bp', __name__)
 
 # Instancia del servicio
 service = UserService(get_db_session())
-
 
 # Controlador de mensajes de error en autenticación
 def register_jwt_error_handlers(app):
@@ -53,7 +53,7 @@ def logout():
     """
     jti = get_jwt()["jti"]  # Identificador único del token
     blacklist.add(jti)
-    return jsonify({"message": "Sesión cerrada correctamente"}), 200
+    return jsonify({"message": "Sesion cerrada correctamente"}), 200
 
 #Ruta GET para listar los usuarios en el sistema
 @user_bp.route('/users', methods=['GET'])

@@ -6,7 +6,7 @@
 ```bash
 TOKEN=$(curl -s -X POST http://127.0.0.1:5000/login \
   -H "Content-Type: application/json" \
-  -d '{"email": "juan@example.com", "password": "juan123"}' | jq -r '.access_token')
+  -d '{"email": "admin@example.com", "password": "admin123"}' | jq -r '.access_token' | tr -d '\n\r')
 ```
 
 1. **Login de Usuarios**
@@ -97,7 +97,7 @@ curl -X POST http://127.0.0.1:5000/books \
 curl -X PUT http://127.0.0.1:5000/books/1 \
    -H "Authorization: Bearer $TOKEN" \
    -H "Content-Type: application/json" \
-   -d '{"title": "El Principito (Edición Revisada)", "author_id": 1}'
+   -d '{"title": "El Principito (Edicion Revisada)", "author_id": 1}'
 ```
 
 5. **Eliminar libro**
@@ -165,7 +165,7 @@ curl -X GET http://127.0.0.1:5000/authors/1 \
 curl -X POST http://127.0.0.1:5000/authors \
    -H "Authorization: Bearer $TOKEN" \
    -H "Content-Type: application/json" \
-   -d '{"name": "Gabriel García Márquez"}'
+   -d '{"name": "Gabriel Garcia Marquez"}'
 ```
 
 4. **Actualizar autor**
