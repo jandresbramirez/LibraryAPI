@@ -39,7 +39,12 @@ def login():
     if user:
         access_token = create_access_token(identity=str(user.id), additional_claims={"role": user.role})
         logger.info(f"Usuario autenticado: {email}")
-        return jsonify({'access_token': access_token}), 200
+        return jsonify({'access_token': access_token, 'user': {
+                'id': user.id,
+                'name': user.name,
+                'email': user.email,
+                'role': user.role
+            }}), 200
     logger.warning(f"Login fallido para el usuario: {email} | Credenciales inválidas")
     return jsonify({'error': 'Credenciales invalidas'}), 401
 

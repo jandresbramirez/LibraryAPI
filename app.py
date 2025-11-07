@@ -9,8 +9,26 @@ from controllers.book_controller import book_bp
 from controllers.user_controller import user_bp, register_jwt_error_handlers
 # Lista negra de tokens usados
 from utils.blacklist import blacklist
+# Importar CORS
+from flask_cors import CORS
 
 app = Flask(__name__) # Inicializamos Flask
+
+# Configurar CORS para permitir solicitudes desde localhost:8000
+# ✅ CONFIGURACIÓN CORS COMPLETA
+CORS(app, resources={
+    r"/*": {  # ✅ Cambiar a /* para todas las rutas
+        "origins": [
+            "https://friendly-fortnight-5grgpwggr55f664-8000.app.github.dev",
+            "https://vigilant-spoon-q7qw9r9r7qpwc49r5-5000.app.github.dev", 
+            "http://localhost:8000",
+            "http://127.0.0.1:8000"
+        ],
+        "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],  # ✅ Agregar OPTIONS
+        "allow_headers": ["Content-Type", "Authorization"],  # ✅ Agregar headers
+        "supports_credentials": True  # ✅ Para cookies/tokens
+    }
+})
 
 # Configurar JWT
 app.config['JWT_SECRET_KEY'] = JWT_SECRET_KEY
