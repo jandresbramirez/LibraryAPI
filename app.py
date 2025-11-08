@@ -15,20 +15,28 @@ from flask_cors import CORS
 app = Flask(__name__) # Inicializamos Flask
 
 # Configurar CORS para permitir solicitudes desde localhost:8000
-# ✅ CONFIGURACIÓN CORS COMPLETA
-CORS(app, resources={
-    r"/*": {  # ✅ Cambiar a /* para todas las rutas
-        "origins": [
-            "https://friendly-fortnight-5grgpwggr55f664-8000.app.github.dev",
-            "https://vigilant-spoon-q7qw9r9r7qpwc49r5-5000.app.github.dev", 
-            "http://localhost:8000",
-            "http://127.0.0.1:8000"
-        ],
-        "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],  # ✅ Agregar OPTIONS
-        "allow_headers": ["Content-Type", "Authorization"],  # ✅ Agregar headers
-        "supports_credentials": True  # ✅ Para cookies/tokens
+# Configuración COMPLETA de CORS
+cors = CORS(app, 
+    resources={
+        r"/*": {
+            "origins": [
+                "https://friendly-fortnight-5grgpwggr55f664-8000.app.github.dev",
+                "http://localhost:8000",
+                "http://127.0.0.1:8000",
+                # Agrega otros origins si necesitas
+            ],
+            "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+            "allow_headers": [
+                "Content-Type", 
+                "Authorization", 
+                "Access-Control-Allow-Credentials",
+                "X-Requested-With"
+            ],
+            "supports_credentials": True,
+            "expose_headers": ["Content-Type", "Authorization"]
+        }
     }
-})
+)
 
 # Configurar JWT
 app.config['JWT_SECRET_KEY'] = JWT_SECRET_KEY

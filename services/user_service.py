@@ -52,7 +52,7 @@ class UserService:
         return self.repository.create_user(name, email, password_hashed, role)
 
     #Actualizar un usuario por su ID
-    def actualizar_usuario(self, user_id: int, name: str = None, email: str = None):
+    def actualizar_usuario(self, user_id: int, name: str = None, email: str = None, password: str = None):
         user = self.repository.get_user_by_id(user_id)
         if not user:
             raise ValueError("El usuario no existe.")
@@ -60,6 +60,8 @@ class UserService:
             users = self.repository.get_all_users()
             if any(u.email == email and u.id != user_id for u in users):
                 raise ValueError("Ese email ya está en uso por otro usuario.")
+                
+        password_hashed = None
         if password:
             password_hashed = generate_password_hash(password)
 

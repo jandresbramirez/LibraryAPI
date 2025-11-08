@@ -103,7 +103,7 @@ def create_user():
 #Ruta PUT para actualizar un usuario por su ID
 @user_bp.route('/users/<int:user_id>', methods=['PUT'])
 @jwt_required()
-@role_required(["admin", "editor"])
+@role_required(["admin", "editor", "user"])
 def update_user(user_id):
     data = request.get_json()
     name = data.get('name')

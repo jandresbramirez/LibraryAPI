@@ -26,7 +26,7 @@ def get_loans():
 def get_loan(loan_id):
     loan = service.obtener_prestamo_id(loan_id)
     if loan:
-        return jsonify({'id': loan.id, 'user_id': loan.user_id, 'book_id': loan.book_id, 'loan_date': loan.loan_date.isoformat(), 'return_date': loan.return_date.isoformat()}), 200
+        return jsonify({'id': loan.id, 'user_id': loan.user_id, 'book_id': loan.book_id, 'loan_date': loan.loan_date.isoformat(), 'return_date': loan.return_date.isoformat() if loan.return_date else None}), 200
     return jsonify({'error': 'Préstamo no encontrado'}), 404
 
 #Ruta POST para crear un nuevo préstamo

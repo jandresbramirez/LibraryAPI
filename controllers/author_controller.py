@@ -29,7 +29,7 @@ def get_author(author_id):
 #Ruta POST para crear un nuevo autor
 @author_bp.route('/authors', methods=['POST'])
 @jwt_required()
-@role_required(["admin", "editor"])
+@role_required(["admin", "editor", "user"])
 def create_author():
     data = request.get_json()
     name = data.get('name')
